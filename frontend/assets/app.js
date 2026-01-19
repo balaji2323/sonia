@@ -1,17 +1,4 @@
-/* ===========================
-   Syddhi Learning - app.js
-   SINGLE CLEAN FILE ✅
-   - OTP first time + set password
-   - Password login from 2nd time
-   - Courses list + thumbnails
-   - Course detail + play video (mp4)
-   - Watch time tracking + continue watching
-   - Dashboard progress % + watched time
-   - NO Download + NO Picture-in-Picture ✅
-=========================== */
-
 const API_BASE = "http://127.0.0.1:8000";
-
 /* ---------------- API helper ---------------- */
 async function api(path, { method = "GET", body } = {}) {
   const res = await fetch(`${API_BASE}${path}`, {
