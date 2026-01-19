@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Disaster Alert System - Send SMS with Location & Speech</title>
+</head>
+<body>
+  <h1>Send SMS Alert with Location</h1>
+
+  <form id="smsForm">
+    <label for="number">Phone Number (with country code):</label><br />
+    <input type="text" id="number" name="number" placeholder="+1234567890" required /><br /><br />
+
+    <label for="message">Message:</label><br />
+    <textarea id="message" name="message" rows="4" cols="50" placeholder="Type your alert message here..." required></textarea><br /><br />
+
+    <button type="submit">Send SMS</button>
+  </form>
+
+  <p id="response"></p>
+
+  <script>
+    const form = document.getElementById('smsForm');
+    const responsePara = document.getElementById('response');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const number = document.getElementById('number').value;
+      const message = document.getElementById('message').value;
+
+      if (!navigator.geolocation) {
+        responsePara.textContent = "Geolocation is not supported by your browser.";
+        responsePara.style.color = 'red';
+        return;
+      }
+
+      // Get user location
+      navigator.geolocation.getCurrentPosition(async (position) => {
+        const { latitude, longitude } = position.coords;
+
+        // Append location to message
+        const fullMessage = `${message}\nLocation: https://www.google.com/maps?q=${latitude},${longitude}`;
+
+        try {
+          // Send SMS via API
+          const res = await fetch('http://127.0.0.1:5001/send_sms', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ number, message: fullMessage }),
+          });
+
+          const data = await res.json();
+
+          if (res.ok) {
+            responsePara.textContent = 'SMS sent successfully!';
+            responsePara.style.color = 'green';
+            form.reset();
+
+            // Speak the original message aloud
+            const utterance = new SpeechSynthesisUtterance(message);
+            window.speechSynthesis.speak(utterance);
+          } else {
+            responsePara.textContent = `Error: ${data.message || 'Failed to send SMS'}`;
+            responsePara.style.color = 'red';
+          }
+        } catch (error) {
+          responsePara.textContent = 'Error: ' + error.message;
+          responsePara.style.color = 'red';
+        }
+      }, (error) => {
+        responsePara.textContent = 'Geolocation error: ' + error.message;
+        responsePara.style.color = 'red';
+      });
+    });
+  </script>
+</body>
+</html>
