@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <link rel="stylesheet" href="assets/styles.css"/>
+  <title>Login - Syddhi Online Learning Platform</title>
+</head>
+
+<body class="auth-bg">
+  <div class="container" id="navbar"></div>
+
+  <main class="auth-wrap">
+    <section class="auth-card reveal">
+      <div class="auth-top">
+        <div class="auth-pill"><b>HI </b></div>
+        <h1>Welcome back</h1>
+        <p>Login with your Gmail Account.</p>
+
+        <div class="auth-tabs">
+          <button id="tabPwd" class="auth-tab active" type="button">Login </button>
+          <button id="tabOtp" class="auth-tab" type="button">First time login</button>
+        </div>
+      </div>
+
+      <!-- Password Login Panel -->
+      <div id="panelPwd" class="auth-panel show">
+        <div class="auth-stepper">
+          <div class="auth-step active"><span>1</span><b>Password</b></div>
+          <div class="auth-line"></div>
+          <div class="auth-step"><span>2</span><b>Continue</b></div>
+        </div>
+
+        <div class="auth-form">
+          <label>Gmail</label>
+          <input id="pwdEmail" class="auth-input" placeholder="yourname@gmail.com" autocomplete="email" />
+
+          <label>Password</label>
+          <input id="pwdPass" class="auth-input" placeholder="Enter password" type="password" autocomplete="current-password" />
+
+          <div class="auth-actions">
+            <button class="btn primary" type="button" onclick="loginWithPassword()">Login</button>
+          </div>
+
+          <div id="pwdStatus" class="auth-status"></div>
+        </div>
+      </div>
+
+      <!-- OTP Wizard Panel -->
+      <div id="panelOtp" class="auth-panel">
+        <div class="auth-stepper">
+          <div id="s1" class="auth-step active"><span>1</span><b>Send OTP</b></div>
+          <div class="auth-line"></div>
+          <div id="s2" class="auth-step"><span>2</span><b>Verify OTP</b></div>
+          <div class="auth-line"></div>
+          <div id="s3" class="auth-step"><span>3</span><b>Set Password</b></div>
+        </div>
+
+        <!-- Step 1 -->
+        <div id="otpStep1" class="wizard-step show">
+          <label>Gmail</label>
+          <input id="otpEmail" class="auth-input" placeholder="yourname@gmail.com" autocomplete="email"/>
+
+          <div class="auth-actions">
+            <button class="btn primary" type="button" onclick="sendOtp()">Send OTP</button>
+          </div>
+
+          <div class="auth-hint">We will send an OTP to your Gmail (check  your inbox/spam).</div>
+          <div id="otpStatus" class="auth-status"></div>
+        </div>
+
+        <!-- Step 2 -->
+        <div id="otpStep2" class="wizard-step">
+          <label>Enter OTP</label>
+          <input id="otpCode" class="auth-input" placeholder="6-digit OTP" inputmode="numeric" maxlength="6"/>
+
+          <div class="auth-actions">
+            <button class="btn primary" type="button" onclick="verifyOtp()">Verify OTP</button>
+            <button class="btn" type="button" onclick="sendOtp()">Resend OTP</button>
+          </div>
+
+          <div id="verifyStatus" class="auth-status"></div>
+        </div>
+
+        <!-- Step 3 -->
+        <div id="otpStep3" class="wizard-step">
+          <label>Create Password</label>
+          <input id="newPass" class="auth-input" placeholder="Create a strong password" type="password" autocomplete="new-password"/>
+
+          <label>Re-enter Password</label>
+          <input id="newPass2" class="auth-input" placeholder="Re-enter password" type="password" autocomplete="new-password"/>
+
+          <div class="auth-actions">
+            <button class="btn primary" type="button" onclick="setPassword()">Set Password & Continue</button>
+          </div>
+
+          <div class="auth-hint">.</div>
+          <div id="setStatus" class="auth-status"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="assets/app.js"></script>
+  <script>
+    // Navbar
+    document.getElementById("navbar").innerHTML = navBar("login");
+    setupReveal();
+
+    // Tabs
+    const tabPwd = document.getElementById("tabPwd");
+    const tabOtp = document.getElementById("tabOtp");
+
+    tabPwd.addEventListener("click", () => showPanel("pwd"));
+    tabOtp.addEventListener("click", () => {
+      showPanel("otp");
+      setOtpStep(1); // always start at Step 1 when switching
+    });
+
+    // Start default view
+    showPanel("pwd");
+    setOtpStep(1);
+  </script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <link rel="stylesheet" href="assets/styles.css"/>
+  <title>Courses - Syddhi Online Learning Platform</title>
+</head>
+<body>
+  <div class="container">
+    <div id="navbar"></div>
+
+    <div style="height:16px"></div>
+
+    <div class="card lift reveal">
+      <div class="row" style="justify-content:space-between;align-items:flex-start">
+        <div>
+          <h2 style="margin:0 0 6px">All Courses</h2>
+          <div class="small">Recorded videos uploaded here. Enroll to unlock tracking + resume.</div>
+        </div>
+
+        <a class="btn primary" href="dashboard.html">My Dashboard</a>
+      </div>
+
+      <div style="height:12px"></div>
+
+      <div class="chips">
+        <span class="chip hot">Popular</span>
+        <span class="chip">Recorded</span>
+        <span class="chip">Resume</span>
+        <span class="chip">Tracking</span>
+      </div>
+    </div>
+
+    <div style="height:14px"></div>
+
+    <!-- loadCourses() will render cards here -->
+    <div id="courses" class="grid"></div>
+  </div>
+
+  <script src="assets/app.js"></script>
+  <script>
+    document.getElementById("navbar").innerHTML = navBar("courses");
+    loadCourses();
+  </script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <link rel="stylesheet" href="assets/styles.css"/>
+  <title>Course - Syddhi Online  Learning Platform</title>
+</head>
+<body>
+  <div class="container">
+    <div id="navbar"></div>
+
+    <div style="height:16px"></div>
+
+    <!-- This is where loadCourse() will render -->
+    <div id="courseBox" class="reveal"></div>
+  </div>
+
+  <script src="assets/app.js"></script>
+  <script>
+    // Navbar + course load
+    document.getElementById("navbar").innerHTML = navBar("courses");
+    loadCourse();
+  </script>
+</body>
+</html>
